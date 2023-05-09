@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginServiceService } from './service/login-service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -7,15 +8,29 @@ import { LoginServiceService } from './service/login-service.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
   title = 'curso-angular-rest';
 
-  usuario = {login:'', senha:''};
+  constructor(private router: Router){
 
-  constructor(private loginservice:LoginServiceService){}
 
-  public login (){
 
-    this.loginservice.login(this.usuario);
   }
+
+  ngOnInit(): void {
+
+     if (localStorage.getItem('token') == null){
+
+        this.router.navigate(['login']);
+
+     }
+  }
+
+  public sair(){
+
+    localStorage.clear();
+    this.router.navigate(['login']);
+  }
+
 }

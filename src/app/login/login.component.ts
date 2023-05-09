@@ -8,9 +8,10 @@ import { LoginServiceService } from '../service/login-service.service';
 })
 export class LoginComponent {
 
+
   usuario = {login:'', senha:''};
 
-  constructor(private loginservice:LoginServiceService){}
+  constructor(private loginservice: LoginServiceService){}
 
   public login (){
 
