@@ -1,0 +1,17 @@
+<table class="table">
+   <thead class="thread-dark">
+      <th scope="col">Login</th>
+      <th scope="col">Nome</th>
+      <th scope="col">CPF</th>
+
+   </thead>
+   <tbody>
+       <tr *ngFor="let usuario of students">
+          <td>{{usuario.login}}</td>
+          <td>{{usuario.nome}}</td>
+          <td>{{usuario.cpf}}</td>
+
+       </tr>
+   </tbody>
+
+</table>
