@@ -1,7 +1,7 @@
-export class User {
 
-
-     login!: string;
-     nome!: string;
-     cpf!: string;
+export interface User {
+  id:number;
+  userlogin: string ;
+  usernome: string ;
+  usercpf: string ;
 }

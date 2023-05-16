@@ -10,16 +10,23 @@ import { User } from 'src/app/model/user';
 })
 export class UsuarioComponent implements OnInit {
 
-  students: Observable<User[]> | any ;
+  users: User[] = [];
 
   constructor(private usuarioService: UsuarioService) { }
 
-    ngOnInit() {
-      this.usuarioService.getStudentList().subscribe(data =>{
-      this.students = data;
-    });
+    ngOnInit():void {
+
+      this.getStudent();
+    }
+
+
+     getStudent():void{
+      this.usuarioService.getStudentList().subscribe((users) =>
+        (this.users = users));
+
+    }
   }
 
 
 
-}
+

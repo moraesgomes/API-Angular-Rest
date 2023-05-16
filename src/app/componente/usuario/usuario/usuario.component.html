@@ -1,15 +1,18 @@
 <table class="table">
    <thead class="thread-dark">
+      <th scope="col">Id</th>
       <th scope="col">Login</th>
       <th scope="col">Nome</th>
       <th scope="col">CPF</th>
 
    </thead>
    <tbody>
-       <tr *ngFor="let usuario of students">
-          <td>{{usuario.login}}</td>
-          <td>{{usuario.nome}}</td>
-          <td>{{usuario.cpf}}</td>
+       <tr *ngFor="let usuario of users">
+
+          <td>{{usuario.id}}</td>
+          <td>{{usuario.userlogin}}</td>
+          <td>{{usuario.usernome}}</td>
+          <td>{{usuario.usercpf}}</td>
 
        </tr>
    </tbody>
