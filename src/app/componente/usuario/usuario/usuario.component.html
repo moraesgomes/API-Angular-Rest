@@ -6,6 +6,7 @@
     <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="nome" placeholder="Pesquisa por nome">
   </div>
   <button type="button" (click)="consultarUserNome()"  class="btn btn-primary mb-2">Buscar</button>
+  <button type="button" [routerLink]="['/usuarioAdd']" routerLinkActive="router-link-active" style="margin-left: 5px;" class="btn btn-success mb-2">Novo</button>
 
 </form>
 
@@ -18,6 +19,8 @@
       <th scope="col">Login</th>
       <th scope="col">Nome</th>
       <th scope="col">CPF</th>
+      <th scope="col">Excluir</th>
+      <th scope="col">Editar</th>
 
    </thead>
    <tbody>
@@ -27,7 +30,8 @@
           <td>{{usuario.userlogin}}</td>
           <td>{{usuario.usernome}}</td>
           <td>{{usuario.usercpf}}</td>
-          <td><button (click)="deleteUsuario(usuario.id)" class="btn btn-primary">excluir</button></td>
+          <td><button (click)="deleteUsuario(usuario.id)" class="btn btn-primary">Excluir</button></td>
+          <td><button [routerLink]="['/usuarioAdd',usuario.id]"  routerLinkActive="router-link-active" class="btn btn-warning">Editar</button></td>
 
        </tr>
    </tbody>

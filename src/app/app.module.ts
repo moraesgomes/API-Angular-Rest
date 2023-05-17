@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component'; /*Requisições Ajax*/
 import { HttpInterceptorModule } from './service/header-interceptor.service';
 import { UsuarioComponent } from './componente/usuario/usuario/usuario.component';
+import { UsuarioAddComponent } from './componente/usuario/usuario-add/usuario-add/usuario-add.component';
 
 
 
@@ -18,7 +19,8 @@ import { UsuarioComponent } from './componente/usuario/usuario/usuario.component
     AppComponent,
     HomeComponent,
     LoginComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    UsuarioAddComponent
   ],
   imports: [
     BrowserModule,
