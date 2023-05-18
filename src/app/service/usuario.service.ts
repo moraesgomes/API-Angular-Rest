@@ -1,8 +1,8 @@
 import { AppConstants } from './../app-constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../model/user';
 import { Observable } from 'rxjs';
+import { User } from '../model/user';
 
 
 @Injectable({
@@ -17,6 +17,11 @@ export class UsuarioService {
       return this.http.get<User[]>(AppConstants.baseUrlConsulta);
   }
 
+  getStudent(id:any):Observable<any>{
+
+    return this.http.get<any>(AppConstants.baseUrl + id);
+  }
+
   deletarUsuario(id:Number):Observable<any>{
 
     return this.http.delete(AppConstants.baseUrl + id, {responseType:'text'});
@@ -25,6 +30,18 @@ export class UsuarioService {
   consultarUser(nome:string): Observable<any>{
 
      return this.http.get(AppConstants.baseUrl + "consultarnome/" + nome);
+
+  }
+
+  salvarUsuario(user: User):Observable<User[]>{
+
+    return this.http.post<User[]>(AppConstants.baseUrlCadastrar,user);
+
+  }
+
+  updateUsuario(user:User):Observable<User[]>{
+
+    return this.http.put<User[]>(AppConstants.baseUrl,user);
 
   }
 }

@@ -17,6 +17,12 @@ export class AppConstants {
           return this.baseServidor + "apirestspring/usuario/consultartodos"
      }
 
+     public static get baseUrlCadastrar():string {
+
+      return this.baseServidor + "apirestspring/usuario/cadastrar"
+ }
+
+
      public static get baseUrl():string {
 
       return this.baseServidor + "apirestspring/usuario/"

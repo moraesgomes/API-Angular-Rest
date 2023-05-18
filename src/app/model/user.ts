@@ -1,7 +1,8 @@
 
-export interface User {
-  id:number;
-  userlogin: string ;
-  usernome: string ;
-  usercpf: string ;
+export class User {
+  id!: number;
+  login!: string;
+  nome!: string;
+  senha!:string;
+  cpf!: string;
 }
