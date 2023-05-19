@@ -33,4 +33,17 @@ export class AppComponent implements OnInit{
     this.router.navigate(['login']);
   }
 
+  public escondeBarraMenu(){
+
+    if (localStorage.getItem('token') !==null &&
+    localStorage.getItem('token')?.toString().trim()) {
+
+       return false;
+
+    }else{
+
+       return true;
+    }
+  }
+
 }
