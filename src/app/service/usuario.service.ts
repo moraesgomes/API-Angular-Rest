@@ -44,4 +44,17 @@ export class UsuarioService {
     return this.http.put<User[]>(AppConstants.baseUrl,user);
 
   }
+
+  userAutenticado(){
+
+    if (localStorage.getItem('token') !==null &&
+    localStorage.getItem('token')?.toString().trim() !=null) {
+
+       return true;
+
+    }else{
+
+      return false;
+    }
+  }
 }

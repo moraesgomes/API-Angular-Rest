@@ -5,15 +5,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UsuarioComponent } from './componente/usuario/usuario/usuario.component';
 import { UsuarioAddComponent } from './componente/usuario/usuario-add/usuario-add/usuario-add.component';
+import { GuardiaoGuard } from './service/guardiao.guard';
 
 const routes: Routes = [
 
-   {path:'home',component:HomeComponent},
+   {path:'home',component:HomeComponent, canActivate:[GuardiaoGuard]},
    {path:'login',component:LoginComponent},
    {path:'',component:LoginComponent},
-   {path:'usuarioList', component:UsuarioComponent},
-   {path:'usuarioAdd', component:UsuarioAddComponent},
-   {path:'usuarioAdd/:id', component:UsuarioAddComponent}
+   {path:'usuarioList', component:UsuarioComponent, canActivate:[GuardiaoGuard]},
+   {path:'usuarioAdd', component:UsuarioAddComponent,canActivate:[GuardiaoGuard]},
+   {path:'usuarioAdd/:id', component:UsuarioAddComponent,canActivate:[GuardiaoGuard]}
 
 ];
 
