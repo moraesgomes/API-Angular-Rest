@@ -12,9 +12,9 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  getStudentList(): Observable<User[]>{
+  getStudentList(): Observable<any>{
 
-      return this.http.get<User[]>(AppConstants.baseUrlConsulta);
+      return this.http.get<any>(AppConstants.baseUrlConsulta);
   }
 
   getStudent(id:any):Observable<any>{

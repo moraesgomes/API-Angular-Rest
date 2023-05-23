@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../service/usuario.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/model/user';
+import { NotificacaoService } from '../../../service/notificacao.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class UsuarioComponent implements OnInit {
   users: User[] = [];
   nome:string = "";
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService , private notificacaoService:NotificacaoService) { }
 
     ngOnInit():void {
 
@@ -30,12 +31,15 @@ export class UsuarioComponent implements OnInit {
 
     deleteUsuario(id:Number){
 
+      if(confirm('Deseja mesmo a exclusão?')){
+
        this.usuarioService.deletarUsuario(id).subscribe(data =>{
 
             console.log("Retorno do método delete " + data);
             this.getStudent();
+            this.notificacaoService.notificar("Removido com sucesso !")
        });
-
+      }
     }
 
     consultarUserNome(){
