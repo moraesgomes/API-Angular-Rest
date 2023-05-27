@@ -6,6 +6,7 @@ import { NotificacaoService } from '../../../../service/notificacao.service';
 
 import { Validacoes } from './../../../../validacoes/validacoes';
 import { Observable, map } from 'rxjs';
+import { Telefone } from 'src/app/model/telefone';
 
 
 
@@ -19,6 +20,8 @@ export class UsuarioAddComponent implements OnInit {
   valid = new Validacoes();
 
   usuario = new User ();
+
+  telefone = new Telefone();
 
 
 
@@ -66,8 +69,44 @@ export class UsuarioAddComponent implements OnInit {
     }
   }
 
+  addFone(){
+
+     if(this.usuario.telefones === undefined){
+
+         this.usuario.telefones = new Array<Telefone>();
+     }
+
+     this.usuario.telefones.push(this.telefone);
+     this.telefone = new Telefone();
+
+  }
+
+  deletarFone(id:any,i:any){
+
+     if(id == null){
+
+         this.usuario.telefones.splice(i,1);
+         return;
+
+
+     }
+
+     if(id!= null && confirm("Deseja remover?")) {
+
+          this.userService.deleteFone(id).subscribe(data =>{
+
+              this.usuario.telefones.splice(i,1);
+
+              this.notificacaoService.notificar("Telefone removido com sucesso");
+          })
+     }
+
+
+  }
+
   novo() {
     this.usuario = new User();
+    this.telefone = new Telefone();
   }
 
   validarLogin(login: string): Observable<User | null> {

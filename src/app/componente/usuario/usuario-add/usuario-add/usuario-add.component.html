@@ -49,7 +49,57 @@
 
    </div>
 
-   <div class="form-row">
+   <div class="card text-center">
+
+     <div class="card-header">
+
+         Contato Telefônico
+
+     </div>
+     <div class="card-body" style="padding-left: 1px;">
+
+       <div class="form-row">
+            <div class="form-group col-md-3">
+
+              <input type="text" class="form-control" [(ngModel)]="telefone.numero" id="numero" name="numero">
+
+            </div>
+
+            <div class="form-group col-md-2">
+
+              <button  class="btn btn-primary" (click)="addFone()">Adicionar</button>
+
+            </div>
+
+       </div>
+
+
+     </div>
+
+
+   </div>
+
+
+   <table class="table">
+
+       <tbody>
+
+           <tr *ngFor="let fone of usuario.telefones; let i = index">
+
+             <td >{{fone.id}}</td>
+             <td>{{fone.numero}}</td>
+             <td><button class="btn btn-danger" (click)="deletarFone(fone.id,i)">Excluir</button></td>
+
+           </tr>
+
+       </tbody>
+
+   </table>
+
+
+
+
+   <div class="form-row" style="margin-top: 20px;">
 
       <div class="form-group col-md-6">
 
