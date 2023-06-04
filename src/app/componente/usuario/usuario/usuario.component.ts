@@ -14,6 +14,8 @@ export class UsuarioComponent implements OnInit {
 
   users: User[] = [];
   nome:string = "";
+  p: number = 1;
+
 
   constructor(private usuarioService: UsuarioService , private notificacaoService:NotificacaoService) { }
 

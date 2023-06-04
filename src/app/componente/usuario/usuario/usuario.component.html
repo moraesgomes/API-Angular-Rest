@@ -24,7 +24,7 @@
 
    </thead>
    <tbody>
-       <tr *ngFor="let usuario of users">
+       <tr *ngFor="let usuario of users | paginate: { itemsPerPage:5, currentPage:p }">
 
           <td>{{usuario.id}}</td>
           <td>{{usuario.login}}</td>
@@ -37,3 +37,8 @@
    </tbody>
 
 </table>
+
+<div class="text-center">
+<pagination-controls (pageChange)="p=$event" previousLabel="Voltar" nextLabel="Avançar" [responsive]="true"></pagination-controls>
+
+</div>

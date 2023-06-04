@@ -62,8 +62,11 @@
             <div class="form-group col-md-3">
 
               <span style="color: red; font-size:23px;" *ngIf="numerovalidate.invalid"> *</span>
-              <input type="tel" class="form-control"   mask="(00) 0 0000 0000"  placeholder="(00) 00000-0000" #numerovalidate="ngModel"
-              [(ngModel)]="telefone.numero"
+              <input type="tel" class="form-control"
+               placeholder="(00) 0 0000-0000" #numerovalidate="ngModel"
+               (input)="limitarNumeroTelefone($event)"
+              [ngModel]="formatPhoneNumber(telefone.numero)"
+              (ngModelChange)="telefone.numero = $event"
 
               id="numero" name="numero">
 
@@ -92,7 +95,7 @@
            <tr *ngFor="let fone of usuario.telefones; let i = index">
 
              <td >{{fone.id}}</td>
-             <td>{{fone.numero }}</td>
+             <td>{{formatPhoneNumber(fone.numero)}}</td>
              <td><button class="btn btn-danger" (click)="deletarFone(fone.id,i)">Excluir</button></td>
 
            </tr>

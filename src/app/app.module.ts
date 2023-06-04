@@ -12,7 +12,8 @@ import { UsuarioComponent } from './componente/usuario/usuario/usuario.component
 import { UsuarioAddComponent } from './componente/usuario/usuario-add/usuario-add/usuario-add.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -31,14 +32,13 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     HttpInterceptorModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    NgxMaskPipe
+    NgxPaginationModule
+
 
 
 
   ],
-  providers: [provideNgxMask()],
+  providers: [],
   bootstrap: [AppComponent]
 })
 
