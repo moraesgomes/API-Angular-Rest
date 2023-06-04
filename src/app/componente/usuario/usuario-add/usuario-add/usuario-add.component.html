@@ -1,6 +1,6 @@
 <h3 style="padding: 10px;">Tela de Usuário</h3>
 
-<form style="padding: 10px;" #formValidate="ngForm">
+<form style="padding: 10px;" #formValidate="ngForm" id="formAddUser" >
    <div class="form-row">
      <div class="form-group col-md-1">
         <label for="id">ID</label>
@@ -43,7 +43,7 @@
     <div class="form-group col-md-3">
         <label for="cpf">CPF</label>
         <span style="color: red; font-size:23px;" *ngIf="cpfValidate.invalid"> *</span>
-        <input type="text" [(ngModel)]="usuario.cpf" #cpfValidate="ngModel" class="form-control" id="cpf" name="cpf" required="true" autocomplete="false">
+        <input type="text" [(ngModel)]="usuario.cpf" placeholder="000.000.000-00" #cpfValidate="ngModel" class="form-control" id="cpf" name="cpf" required="true" autocomplete="false">
 
     </div>
 
@@ -61,7 +61,12 @@
        <div class="form-row">
             <div class="form-group col-md-3">
 
-              <input type="text" class="form-control" [(ngModel)]="telefone.numero" id="numero" name="numero">
+              <span style="color: red; font-size:23px;" *ngIf="numerovalidate.invalid"> *</span>
+              <input type="tel" class="form-control"   mask="(00) 0 0000 0000"  placeholder="(00) 00000-0000" #numerovalidate="ngModel"
+              [(ngModel)]="telefone.numero"
+
+              id="numero" name="numero">
+
 
             </div>
 
@@ -87,7 +92,7 @@
            <tr *ngFor="let fone of usuario.telefones; let i = index">
 
              <td >{{fone.id}}</td>
-             <td>{{fone.numero}}</td>
+             <td>{{fone.numero }}</td>
              <td><button class="btn btn-danger" (click)="deletarFone(fone.id,i)">Excluir</button></td>
 
            </tr>

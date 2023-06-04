@@ -10,10 +10,14 @@ import { Telefone } from 'src/app/model/telefone';
 
 
 
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './usuario-add.component.html',
-  styleUrls: ['./usuario-add.component.css']
+  styleUrls: ['./usuario-add.component.css'],
+
+
 })
 export class UsuarioAddComponent implements OnInit {
 
@@ -23,11 +27,13 @@ export class UsuarioAddComponent implements OnInit {
 
   telefone = new Telefone();
 
-
+  telefoneFormatado!: string;
 
   constructor(private routeActive: ActivatedRoute , private userService:UsuarioService,
     private notificacaoService:NotificacaoService ,
     ){}
+
+
 
   ngOnInit(){
 
@@ -71,6 +77,7 @@ export class UsuarioAddComponent implements OnInit {
 
   addFone(){
 
+
      if(this.usuario.telefones === undefined){
 
          this.usuario.telefones = new Array<Telefone>();
@@ -78,6 +85,8 @@ export class UsuarioAddComponent implements OnInit {
 
      this.usuario.telefones.push(this.telefone);
      this.telefone = new Telefone();
+
+
 
   }
 
