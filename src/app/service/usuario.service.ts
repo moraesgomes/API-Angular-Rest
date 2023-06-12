@@ -14,8 +14,14 @@ export class UsuarioService {
 
   getStudentList(): Observable<any>{
 
-      return this.http.get<any>(AppConstants.baseUrlConsulta);
+      return this.http.get<any>(AppConstants.baseUrl);
   }
+
+  getStudentListPage(pagina:any): Observable<any>{
+
+    return this.http.get<any>(AppConstants.baseUrl + 'page/' + pagina);
+}
+
 
   getStudent(id:any):Observable<any>{
 
@@ -38,9 +44,15 @@ export class UsuarioService {
 
   }
 
-  salvarUsuario(user: User):Observable<User[]>{
+  consultarUserPorPage(nome:string, page:Number): Observable<any>{
 
-    return this.http.post<User[]>(AppConstants.baseUrlCadastrar,user);
+    return this.http.get(AppConstants.baseUrl + "consultarnome/" + nome + "/page/" + page);
+
+ }
+
+  salvarUsuario(user: User):Observable<any>{
+
+    return this.http.post<any>(AppConstants.baseUrlCadastrar,user);
 
   }
 

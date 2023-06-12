@@ -13,45 +13,100 @@ import { NotificacaoService } from '../../../service/notificacao.service';
 export class UsuarioComponent implements OnInit {
 
   users: User[] = [];
-  nome:string = "";
+  nome!: string;
   p: number = 1;
+  total:number = 0;
 
 
   constructor(private usuarioService: UsuarioService , private notificacaoService:NotificacaoService) { }
 
     ngOnInit():void {
 
-      this.getStudent();
-    }
+      this.carregarDadosUsuarios();
 
-
-     getStudent():void{
-      this.usuarioService.getStudentList().subscribe((users) =>
-        (this.users = users));
 
     }
 
-    deleteUsuario(id:Number){
+    carregarDadosUsuarios(): void {
+
+        this.usuarioService.getStudentList().subscribe(data => {
+
+       if(data && data.content){
+
+        this.users = data.content;
+        this.total = data.totalElements;
+
+       }
+
+
+      });
+
+
+
+    }
+
+    deleteUsuario(id:Number,index:any){
 
       if(confirm('Deseja mesmo a exclusão?')){
 
        this.usuarioService.deletarUsuario(id).subscribe(data =>{
 
             console.log("Retorno do método delete " + data);
-            this.getStudent();
-            this.notificacaoService.notificar("Removido com sucesso !")
+            this.notificacaoService.notificar("Removido com sucesso !");
+            this.users.splice(index,1)
+
        });
       }
     }
 
     consultarUserNome(){
 
-      this.usuarioService.consultarUser(this.nome).subscribe( data => {
-          this.users=data;
+         if(this.nome === ''){
+
+            this.carregarDadosUsuarios();
+
+         }
+
+          else {
+
+              this.usuarioService.consultarUser(this.nome).subscribe( data => {
+              this.users = data.content;
+              this.total = data.totalElements;
+
+          });
+
+
+         }
+
+
+    }
+
+    carregarPagina(pagina:any){
+
+       if(this.nome !==''){
+
+          this.usuarioService.consultarUserPorPage(this.nome,(pagina-1)).subscribe( data => {
+          this.users = data.content;
+          this.total = data.totalElements;
 
       });
+
+
+       }
+
+        this.usuarioService.getStudentListPage(pagina-1).subscribe(data => {
+        this.users = data.content;
+        this.total = data.totalElements;
+
+
+      });
+
     }
-  }
+
+    }
+
+
+
 
 
 

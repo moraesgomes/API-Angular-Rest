@@ -52,10 +52,10 @@ export class UsuarioAddComponent implements OnInit {
   salvarUser() {
 
     if (this.usuario.id != null && this.usuario.id.toString().trim() != "") {
-      this.userService.updateUsuario(this.usuario).subscribe(data => {
+        this.userService.updateUsuario(this.usuario).subscribe(data => {
         this.novo();
         console.info("user atualizado" + data);
-        this.notificacaoService.notificar("Gravado com Sucesso");
+        this.notificacaoService.notificar("Atualizado com Sucesso");
       });
     } else if (!this.valid.validarCPF(this.usuario.cpf)) {
       this.notificacaoService.notificar("CPF inválido , Favor insira o CPF correto!");
@@ -125,12 +125,16 @@ export class UsuarioAddComponent implements OnInit {
   }
 
   validarLogin(login: string): Observable<User | null> {
-
     return this.userService.getStudentList().pipe(
       map(studentList => {
-        for (const student of studentList) {
-          if (student.login === login) {
-            return student; // O login já existe no banco de dados
+
+        if (studentList && studentList.content) {
+
+          for (const student of studentList.content) {
+
+            if (student.login === login) {
+              return student; // O login já existe no banco de dados
+            }
           }
         }
 
@@ -138,6 +142,13 @@ export class UsuarioAddComponent implements OnInit {
       })
     );
   }
+
+
+
+
+
+
+
 
   formatPhoneNumber(phoneNumber: string): string {
     if (typeof phoneNumber === 'string') {

@@ -12,10 +12,6 @@ export class AppConstants {
      }
 
 
-     public static get baseUrlConsulta():string {
-
-          return this.baseServidor + "apirestspring/usuario/consultartodos"
-     }
 
      public static get baseUrlCadastrar():string {
 
