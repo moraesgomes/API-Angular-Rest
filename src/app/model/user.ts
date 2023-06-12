@@ -6,6 +6,7 @@ export class User {
   nome!: string;
   senha!:string;
   cpf!: string;
+  dataNascimento!:String;
 
   telefones: Telefone[] = [];
 }
