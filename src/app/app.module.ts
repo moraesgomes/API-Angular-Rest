@@ -13,7 +13,8 @@ import { UsuarioAddComponent } from './componente/usuario/usuario-add/usuario-ad
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap'
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 
@@ -35,7 +36,8 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap'
     BrowserAnimationsModule,
     MatSnackBarModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    NgxCurrencyModule
 
 
 

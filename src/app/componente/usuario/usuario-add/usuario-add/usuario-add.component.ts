@@ -15,6 +15,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Profissao } from 'src/app/model/profissao';
 
 @Injectable()
 export class FormatDateAdpater extends NgbDateAdapter<any> {
@@ -97,11 +98,15 @@ function validarDia(valor: any) {
   {provide:NgbDateAdapter,useClass:FormatDateAdpater}],
 })
 export class UsuarioAddComponent implements OnInit {
+
   valid = new Validacoes();
 
   usuario = new User();
 
   telefone = new Telefone();
+
+
+  profissoes!: Array<Profissao>;
 
   constructor(
     private routeActive: ActivatedRoute,
@@ -110,22 +115,42 @@ export class UsuarioAddComponent implements OnInit {
     private config: NgbDatepickerConfig
   ) {
 
+
+    this.profissoes = [];
     config.minDate = { year: 1900, month: 1, day: 1 };
   }
 
   ngOnInit() {
-    let id = this.routeActive.snapshot.paramMap.get('id');
 
+    let id = this.routeActive.snapshot.paramMap.get('id');
     if (id != null) {
       this.userService.getStudent(id).subscribe((data) => {
+
         this.usuario = data;
+        this.carregarProfissoes();
+
       });
+    } else {
+      this.carregarProfissoes();
     }
   }
 
+  carregarProfissoes() {
+
+      this.userService.getProfissaoList().subscribe(data => {
+      this.profissoes = data;
+    });
+
+  }
+
+
+
   salvarUser() {
+
+    console.log(this.profissoes);
     if (this.usuario.id != null && this.usuario.id.toString().trim() != '') {
       this.userService.updateUsuario(this.usuario).subscribe((data) => {
+        this.carregarProfissoes();
         this.novo();
         console.info('user atualizado' + data);
         this.notificacaoService.notificar('Atualizado com Sucesso');
@@ -142,6 +167,7 @@ export class UsuarioAddComponent implements OnInit {
           );
         } else {
           this.userService.salvarUsuario(this.usuario).subscribe((data) => {
+            this.carregarProfissoes();
             this.novo();
             console.info('Gravou user: ' + data);
             this.notificacaoService.notificar('Gravado com Sucesso');

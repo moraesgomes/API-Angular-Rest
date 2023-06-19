@@ -23,4 +23,10 @@ export class AppConstants {
 
       return this.baseServidor + "apirestspring/usuario/"
  }
+
+ public static get getBaseurlPath(): string {
+
+    return this.baseServidor + "apirestspring/"
+ }
+
 }

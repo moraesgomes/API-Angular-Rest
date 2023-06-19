@@ -12,6 +12,11 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
+  getProfissaoList():Observable<any>{
+
+     return this.http.get<any>(AppConstants.getBaseurlPath + 'profissao/');
+  }
+
   getStudentList(): Observable<any>{
 
       return this.http.get<any>(AppConstants.baseUrl);

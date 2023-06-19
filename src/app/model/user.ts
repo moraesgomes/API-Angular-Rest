@@ -1,3 +1,4 @@
+import { Profissao } from "./profissao";
 import { Telefone } from "./telefone";
 
 export class User {
@@ -7,6 +8,9 @@ export class User {
   senha!:string;
   cpf!: string;
   dataNascimento!:String;
+
+  profissao: Profissao = new Profissao();
+  salario!: DoubleRange;
 
   telefones: Telefone[] = [];
 }
