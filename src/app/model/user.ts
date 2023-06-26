@@ -13,4 +13,7 @@ export class User {
   salario!: DoubleRange;
 
   telefones: Telefone[] = [];
+
+
+
 }

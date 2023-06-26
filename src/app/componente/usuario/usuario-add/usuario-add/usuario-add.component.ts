@@ -122,32 +122,40 @@ export class UsuarioAddComponent implements OnInit {
 
   ngOnInit() {
 
-    let id = this.routeActive.snapshot.paramMap.get('id');
-    if (id != null) {
-      this.userService.getStudent(id).subscribe((data) => {
+    this.carregarProfissoes();
 
+    let id = this.routeActive.snapshot.paramMap.get('id');
+    if (id != null ) {
+      this.userService.getStudent(id).subscribe((data) => {
         this.usuario = data;
-        this.carregarProfissoes();
 
       });
-    } else {
-      this.carregarProfissoes();
     }
   }
 
   carregarProfissoes() {
-
-      this.userService.getProfissaoList().subscribe(data => {
+    this.userService.getProfissaoList().subscribe(data => {
       this.profissoes = data;
-    });
+      console.log(data); // Verifique se a lista de profissões está sendo carregada corretamente
+      console.log(this.usuario.profissao); // Verifique se o usuário possui uma profissão definida
 
+      if (this.usuario.profissao && this.usuario.profissao.id) {
+        const profissaoEncontrada = this.profissoes.find(profissao => profissao.id === this.usuario.profissao.id);
+        console.log(profissaoEncontrada);
+
+        if (profissaoEncontrada) {
+          this.usuario.profissao = profissaoEncontrada;
+        }
+      }
+    });
   }
+
 
 
 
   salvarUser() {
 
-    console.log(this.profissoes);
+
     if (this.usuario.id != null && this.usuario.id.toString().trim() != '') {
       this.userService.updateUsuario(this.usuario).subscribe((data) => {
         this.carregarProfissoes();
