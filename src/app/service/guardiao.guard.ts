@@ -16,7 +16,7 @@ constructor(private userService:UsuarioService){
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-     console.info('chamou o guardião');
+
     return this.userService.userAutenticado();
   }
 

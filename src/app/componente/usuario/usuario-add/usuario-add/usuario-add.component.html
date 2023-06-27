@@ -125,7 +125,7 @@
         class="form-control"
         required="true"
       >
-        <option *ngFor="let profissao of profissoes" [ngValue]="profissao">
+        <option *ngFor="let profissao of profissoes" [ngValue]="profissao.id">
           {{ profissao.descricao }}
         </option>
       </select>

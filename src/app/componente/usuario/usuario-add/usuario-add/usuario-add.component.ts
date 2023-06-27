@@ -18,11 +18,11 @@ import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Profissao } from 'src/app/model/profissao';
 
 @Injectable()
-export class FormatDateAdpater extends NgbDateAdapter<any> {
+export class FormatDateAdpater extends NgbDateAdapter<string> {
   readonly DELIMITER = '/';
 
-  override fromModel(value: any | null): NgbDateStruct {
-    if (value) {
+  fromModel(value: string | null): NgbDateStruct {
+    if (typeof value === 'string') {
       const date = value.split(this.DELIMITER);
       return {
         day: parseInt(date[0], 10),
@@ -31,28 +31,21 @@ export class FormatDateAdpater extends NgbDateAdapter<any> {
       };
     }
 
-    // Retorna uma instância  válida de  NgbDateStruc mesmo quando o valor é null
     return { day: 0, month: 0, year: 0 };
   }
 
-
-
-  override toModel(date: NgbDateStruct | null): any | null {
+  toModel(date: NgbDateStruct | null): string {
     return date
       ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year
-      : null;
-
-
+      : '';
   }
-
-
 }
 
 @Injectable()
-export class FormataData extends NgbDateParserFormatter {
+export class FormataData implements NgbDateParserFormatter {
   readonly DELIMITER = '/';
 
-  override parse(value: any): NgbDateStruct {
+  parse(value: string): NgbDateStruct {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
@@ -62,9 +55,9 @@ export class FormataData extends NgbDateParserFormatter {
       };
     }
 
-    throw new Error('Method not implemented.');
+    return { day: 0, month: 0, year: 0 };
   }
-  override format(date: NgbDateStruct): any {
+  format(date: NgbDateStruct): any {
     return date
       ? validarDia(date.day) +
           this.DELIMITER +
@@ -72,7 +65,6 @@ export class FormataData extends NgbDateParserFormatter {
           this.DELIMITER +
           date.year
       : '';
-    throw new Error('Method not implemented.');
   }
 
   toModel(date: NgbDateStruct | null): any | null {
@@ -83,7 +75,7 @@ export class FormataData extends NgbDateParserFormatter {
 }
 
 function validarDia(valor: any) {
-  if (valor.toString !== '' && parseInt(valor) <= 9) {
+  if (valor.toString() !== '' && parseInt(valor) <= 9) {
     return '0' + valor;
   }
 
@@ -94,17 +86,17 @@ function validarDia(valor: any) {
   selector: 'app-root',
   templateUrl: './usuario-add.component.html',
   styleUrls: ['./usuario-add.component.css'],
-  providers: [{ provide: NgbDateParserFormatter, useClass: FormataData },
-  {provide:NgbDateAdapter,useClass:FormatDateAdpater}],
+  providers: [
+    { provide: NgbDateParserFormatter, useClass: FormataData },
+    { provide: NgbDateAdapter, useClass: FormatDateAdpater },
+  ],
 })
 export class UsuarioAddComponent implements OnInit {
-
   valid = new Validacoes();
 
   usuario = new User();
 
   telefone = new Telefone();
-
 
   profissoes!: Array<Profissao>;
 
@@ -114,34 +106,47 @@ export class UsuarioAddComponent implements OnInit {
     private notificacaoService: NotificacaoService,
     private config: NgbDatepickerConfig
   ) {
-
-
-    this.profissoes = [];
     config.minDate = { year: 1900, month: 1, day: 1 };
   }
 
   ngOnInit() {
-
     this.carregarProfissoes();
 
     let id = this.routeActive.snapshot.paramMap.get('id');
-    if (id != null ) {
+
+    if (id != null) {
       this.userService.getStudent(id).subscribe((data) => {
         this.usuario = data;
 
+        // Conversão da data de nascimento
+        if (this.usuario.dataNascimento) {
+          const dataNascimentoTimestamp = parseInt(
+            this.usuario.dataNascimento.toString()
+          );
+          const dataNascimento = new Date(dataNascimentoTimestamp);
+
+          // Extrair os componentes da data (dia, mês, ano)
+          const dia = dataNascimento.getDate();
+          const mes = dataNascimento.getMonth() + 1; // O mês é baseado em zero, então adicionamos 1
+          const ano = dataNascimento.getFullYear();
+
+          // Atualizar o objeto de usuário com a data formatada
+          this.usuario.dataNascimento = `${dia
+            .toString()
+            .padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${ano}`;
+        }
       });
     }
   }
 
   carregarProfissoes() {
-    this.userService.getProfissaoList().subscribe(data => {
+    this.userService.getProfissaoList().subscribe((data) => {
       this.profissoes = data;
-      console.log(data); // Verifique se a lista de profissões está sendo carregada corretamente
-      console.log(this.usuario.profissao); // Verifique se o usuário possui uma profissão definida
 
       if (this.usuario.profissao && this.usuario.profissao.id) {
-        const profissaoEncontrada = this.profissoes.find(profissao => profissao.id === this.usuario.profissao.id);
-        console.log(profissaoEncontrada);
+        const profissaoEncontrada = this.profissoes.find(
+          (profissao) => profissao.id === this.usuario.profissao.id
+        );
 
         if (profissaoEncontrada) {
           this.usuario.profissao = profissaoEncontrada;
@@ -150,12 +155,7 @@ export class UsuarioAddComponent implements OnInit {
     });
   }
 
-
-
-
   salvarUser() {
-
-
     if (this.usuario.id != null && this.usuario.id.toString().trim() != '') {
       this.userService.updateUsuario(this.usuario).subscribe((data) => {
         this.carregarProfissoes();
