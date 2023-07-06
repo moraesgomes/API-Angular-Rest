@@ -22,8 +22,8 @@ export class FormatDateAdpater extends NgbDateAdapter<string> {
   readonly DELIMITER = '/';
 
   fromModel(value: string | null): NgbDateStruct {
-    if (typeof value === 'string') {
-      const date = value.split(this.DELIMITER);
+    if (value) {
+      let date = value.split(this.DELIMITER);
       return {
         day: parseInt(date[0], 10),
         month: parseInt(date[1], 10),
@@ -31,10 +31,15 @@ export class FormatDateAdpater extends NgbDateAdapter<string> {
       };
     }
 
-    return { day: 0, month: 0, year: 0 };
+    const currentDate = new Date();
+    return {
+      day: currentDate.getDate(),
+      month: currentDate.getMonth() + 1,
+      year: currentDate.getFullYear(),
+    };
   }
 
-  toModel(date: NgbDateStruct | null): string {
+  toModel(date: NgbDateStruct | null): string  {
     return date
       ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year
       : '';
@@ -55,17 +60,23 @@ export class FormataData implements NgbDateParserFormatter {
       };
     }
 
-    return { day: 0, month: 0, year: 0 };
+    const currentDate = new Date();
+    return {
+      day: currentDate.getDate(),
+      month: currentDate.getMonth() + 1,
+      year: currentDate.getFullYear(),
+    };
   }
+
   format(date: NgbDateStruct): any {
-    return date
-      ? validarDia(date.day) +
-          this.DELIMITER +
-          validarDia(date.month) +
-          this.DELIMITER +
-          date.year
-      : '';
-  }
+  return date
+    ? validarDia(date.day) +
+        this.DELIMITER +
+        validarDia(date.month) +
+        this.DELIMITER +
+        date.year
+    : '';
+}
 
   toModel(date: NgbDateStruct | null): any | null {
     return date
@@ -160,8 +171,10 @@ export class UsuarioAddComponent implements OnInit {
       this.userService.updateUsuario(this.usuario).subscribe((data) => {
         this.carregarProfissoes();
         this.novo();
-        console.info('user atualizado' + data);
+
+
         this.notificacaoService.notificar('Atualizado com Sucesso');
+        console.log(this.usuario.dataNascimento)
       });
     } else if (!this.valid.validarCPF(this.usuario.cpf)) {
       this.notificacaoService.notificar(

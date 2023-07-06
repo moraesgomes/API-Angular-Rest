@@ -49,7 +49,7 @@ export class UsuarioService {
 
   }
 
-  consultarUserPorPage(nome:string, page:Number): Observable<any>{
+  consultarUserPorPage(nome:string, page:number): Observable<any>{
 
     return this.http.get(AppConstants.baseUrl + "consultarnome/" + nome + "/page/" + page);
 

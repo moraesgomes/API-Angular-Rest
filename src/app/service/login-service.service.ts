@@ -44,7 +44,7 @@ export class LoginServiceService {
 
     return this.http.post(AppConstants.getBaseurlPath + 'recuperar/',user).subscribe(data =>{
 
-     this.notificao.notificar(JSON.parse(JSON.stringify(data)).error);
+     this.notificao.notificar(JSON.parse(JSON.stringify(data)).error)
 
     },
 

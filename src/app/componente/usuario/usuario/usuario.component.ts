@@ -5,6 +5,7 @@ import { User } from 'src/app/model/user';
 import { NotificacaoService } from '../../../service/notificacao.service';
 
 
+
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
@@ -14,7 +15,7 @@ export class UsuarioComponent implements OnInit {
 
   users: User[] = [];
   nome!: string;
-  p: number = 1;
+  p: number = 0;
   total:number = 0;
 
 
@@ -24,26 +25,19 @@ export class UsuarioComponent implements OnInit {
 
       this.carregarDadosUsuarios();
 
-
     }
 
-    carregarDadosUsuarios(): void {
-
-        this.usuarioService.getStudentList().subscribe(data => {
-
-       if(data && data.content){
-
-        this.users = data.content;
-        this.total = data.totalElements;
-
-       }
+   carregarDadosUsuarios() {
 
 
-      });
+          this.usuarioService.getStudentList().subscribe(data => {
+          this.users = data.content;
+          this.total = data.totalElements;
 
 
+        });
+      }
 
-    }
 
     deleteUsuario(id:Number,index:any){
 
@@ -59,48 +53,37 @@ export class UsuarioComponent implements OnInit {
       }
     }
 
-    consultarUserNome(){
-
-         if(this.nome === ''){
-
-            this.carregarDadosUsuarios();
-
-         }
-
-          else {
-
-              this.usuarioService.consultarUser(this.nome).subscribe( data => {
-              this.users = data.content;
-              this.total = data.totalElements;
-
-          });
-
-
-         }
-
-
-    }
-
-    carregarPagina(pagina:any){
-
-       if(this.nome !==''){
-
-          this.usuarioService.consultarUserPorPage(this.nome,(pagina-1)).subscribe( data => {
+    consultarUserNome() {
+      if (this.nome === '') {
+        this.carregarDadosUsuarios();
+      } else {
+          this.usuarioService.consultarUser(this.nome).subscribe(data => {
           this.users = data.content;
           this.total = data.totalElements;
+        });
+      }
+    }
 
-      });
+    carregarPagina(p: number) {
+
+        this.p = p;
+
+        if (this.nome && this.nome.trim() !== '') {
+          // Executa quando nome não é vazio
+            this.usuarioService.consultarUserPorPage(this.nome, this.p-1).subscribe(data => {
+            this.users = data.content;
+            this.total = data.totalElements;
 
 
-       }
+          });
+        }
 
-        this.usuarioService.getStudentListPage(pagina-1).subscribe(data => {
+        this.usuarioService.getStudentListPage(this.p).subscribe(data => {
         this.users = data.content;
         this.total = data.totalElements;
 
 
       });
-
     }
 
     }
