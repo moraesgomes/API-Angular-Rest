@@ -1,8 +1,9 @@
 import { AppConstants } from './../app-constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { User } from '../model/user';
+import { UserReport } from '../model/UserReport';
 
 
 @Injectable({
@@ -79,4 +80,34 @@ export class UsuarioService {
       return false;
     }
   }
+
+  downloadPdfRelatorio() {
+
+    return this.http.get(AppConstants.baseUrl + 'relatorio', { responseType: 'text' }).subscribe(
+      (data => {
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+          iframe.src = data;
+        } else {
+          console.error("Elemento 'iframe' não encontrado.");
+        }
+      })
+    );
+  }
+
+  downloadPdfRelatorioParam(userreport:UserReport) {
+
+    return this.http.post(AppConstants.baseUrl + 'relatorio/',userreport ,{ responseType: 'text' }).subscribe(
+      (data => {
+        const iframe = document.querySelector('iframe');
+        if (iframe) {
+          iframe.src = data;
+        } else {
+          console.error("Elemento 'iframe' não encontrado.");
+        }
+      })
+    );
+  }
+
+
 }

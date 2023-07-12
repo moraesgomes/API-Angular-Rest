@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { UsuarioReportComponent } from './componente/usuario/usuario/usuario-report/usuario-report.component';
 
 
 
@@ -26,6 +27,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     LoginComponent,
     UsuarioComponent,
     UsuarioAddComponent,
+    UsuarioReportComponent
   ],
   imports: [
     BrowserModule,
