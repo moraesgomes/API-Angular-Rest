@@ -16,6 +16,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { UsuarioReportComponent } from './componente/usuario/usuario/usuario-report/usuario-report.component';
+import { NgChartsModule } from 'ng2-charts';
+import { BarChartComponent } from './componente/bar-chart/bar-chart.component';
+
+
+
 
 
 
@@ -27,7 +32,9 @@ import { UsuarioReportComponent } from './componente/usuario/usuario/usuario-rep
     LoginComponent,
     UsuarioComponent,
     UsuarioAddComponent,
-    UsuarioReportComponent
+    UsuarioReportComponent,
+    BarChartComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,7 +46,9 @@ import { UsuarioReportComponent } from './componente/usuario/usuario/usuario-rep
     MatSnackBarModule,
     NgxPaginationModule,
     NgbModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    NgChartsModule,
+
 
 
 
